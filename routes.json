@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "route": "/admin",
+      "serve": "/admin",
+      "statusCode": 200
+    }
+  ]
+}
