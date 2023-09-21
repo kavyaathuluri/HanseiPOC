@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import * as microsoftTeams from "@microsoft/teams-js";
 import './AdminInterface.css'; 
 
 const AdminInterface = () => {
@@ -39,9 +40,76 @@ console.info(data);
 
   // Handle approval logic here
   const approveMember = (memberId) => {
-    // Implement logic to approve the member with memberId.
-    // You may make an API call to update the approval status.
+        if (window.microsoftTeams) {
+        // Initialize the Microsoft Teams SDK
+             microsoftTeams.initialize();
+            // Function to send a constant message to a channel
+            const sendConstantMessage = () => {
+                const message = {
+                type: 'message',
+                text: 'Verified details, authorization is successful!',
+                };
+
+            // Replace 'channelId' with the actual ID of the target channel
+            const channelId = 'your-channel-id';
+
+            // Send the message to the specified channel
+            microsoftTeams.app.sendMessageToChannel(channelId, message);
+            };
+        }
+        else{
+            const axios = require('axios');
+//https://teams.microsoft.com/l/channel/19%3ab5e569d7055b4dc8a0a40ff5e150a7b2%40thread.tacv2/Member%2520Form?groupId=b0e35fe5-a737-4891-9a75-2b7e1e5ad92f&tenantId=6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4
+            const accessToken = 'YOUR_ACCESS_TOKEN'; // Replace with your actual access token
+            const channelId = 'YOUR_CHANNEL_ID';//19:b5e569d7055b4dc8a0a40ff5e150a7b2@thread.tacv2/Member%20Form?groupId=b0e35fe5-a737-4891-9a75-2b7e1e5ad92f&tenantId=6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4
+            // Replace with the channel's ID
+
+            const message = {
+            body: {
+                content: 'Authorization is successful!',
+            },
+            };
+
+            const url = `https://graph.microsoft.com/v1.0/teams/${channelId}/messages`;
+
+            const headers = {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            };
+
+            axios.post(url, message, { headers })
+            .then((response) => {
+                console.log('Message sent:', response.data);
+            })
+            .catch((error) => {
+                console.error('Error sending message:', error);
+            });
+
+        }
+        
   };
+    // // Send a message to the specified channel
+    // microsoftTeams
+    //   .getContext()
+    //   .then((context) => {
+    //     const conversationId = "YOUR_PRIVATE_CHANNEL_ID"; // Replace with the actual channel ID
+    //     const messagePayload = {
+    //       type: "message",
+    //       attachments: [
+    //         {
+    //           contentType: "text/html",
+    //           content: "Verified details, authorization is successful!",
+    //         },
+    //       ],
+    //     };
+  
+    //     microsoftTeams.sendMessageToConversation(conversationId, messagePayload);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error sending message to Teams:", error);
+    //   });
+  
+  
 
   return (
     <div>

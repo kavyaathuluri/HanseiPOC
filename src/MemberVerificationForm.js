@@ -10,6 +10,7 @@ function MemberVerificationForm() {
     dateOfBirth: '',
   });
 
+  const [submissionStatus, setSubmissionStatus] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -18,10 +19,28 @@ function MemberVerificationForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    setSubmissionStatus('submitting');
     // Handle form submission (e.g., send data to Azure Function).
     console.log('Member verification data submitted:', formData);
+    // Send data to the Azure Function
+    const response = await fetch('https://chatbotevafa.azurewebsites.net/api/MemberValidation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-functions-key': 'IfOY7krMmVBcaLrNsLWx6MYeTnj1DpCJWBcwK9kbHuavkrz2IBVZJw==',
+  },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      // Handle successful response
+      setSubmissionStatus('success');
+    } else {
+      // Handle error response
+      setSubmissionStatus('error');
+    }
   };
 
   return (
@@ -79,6 +98,10 @@ function MemberVerificationForm() {
           />
         </div>
         <button type="submit">Submit</button>
+        {submissionStatus === 'submitting' && <p>Submitting...</p>}
+        {submissionStatus === 'success' && <p>Submission successful!</p>}
+        {submissionStatus === 'error' && <p>Submission failed. Please try again.</p>}
+
       </form>
     </div>
   );
