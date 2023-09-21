@@ -9,8 +9,8 @@ function App() {
       <Router>
         <Routes>
         {/* <Route path="/member-verification" element={<MemberVerificationForm />} /> */}
-        <Route path="/" element={<MemberVerificationForm />} />
-          <Route path="/admin" element={<AdminInterface />} />
+        <Route path="/" exact Component={<MemberVerificationForm />} />
+          <Route path="/admin" Component={<AdminInterface />} />
         </Routes>
       </Router>
     </div>
