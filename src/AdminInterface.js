@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import * as microsoftTeams from "@microsoft/teams-js";
+//import * as microsoftTeams from "@microsoft/teams-js";
 import './AdminInterface.css'; 
 import axios from 'axios';
 
@@ -42,6 +42,10 @@ console.info(data);
 
   // Handle approval logic here
   const approveMember = (memberId) => {
+    // Implement logic to approve the member with memberId.
+    // You may make an API call to update the approval status.
+  };
+ /* const approveMember = (memberId) => {
         if (window.microsoftTeams) {
         // Initialize the Microsoft Teams SDK
              microsoftTeams.initialize();
@@ -89,7 +93,7 @@ console.info(data);
 
         }
         
-  };
+  };*/
     // // Send a message to the specified channel
     // microsoftTeams
     //   .getContext()
