@@ -51,9 +51,9 @@ console.info(data);
                     content: 'Authorization is successful!',
                 },
                 };
-                const url = `https://graph.microsoft.com/v1.0/teams/${channelId}/messages`;
+                const url = 'https://graph.microsoft.com/v1.0/teams/${channelId}/messages';
                 const headers = {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: 'Bearer ${accessToken}',
                 'Content-Type': 'application/json',
                 };
     
