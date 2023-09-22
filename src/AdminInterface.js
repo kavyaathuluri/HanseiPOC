@@ -4,8 +4,6 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import './AdminInterface.css'; 
 import axios from 'axios';
 
-
-
 const AdminInterface = () => {
   const [memberInputs, setMemberInputs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +47,9 @@ const msalConfig = {
 };
 
 const msalInstance = new msal.PublicClientApplication(msalConfig);
+
 let newAccessToken = '';
+
 async function refreshToken() {
   try {
     const accounts = msalInstance.getAllAccounts();
@@ -61,7 +61,9 @@ async function refreshToken() {
     const response = await msalInstance.acquireTokenSilent(silentRequest);
 
     // Use the new access token for your API request
+
     newAccessToken = response.accessToken;
+
     // Make your API request with the new access token
     // ...
   } catch (error) {

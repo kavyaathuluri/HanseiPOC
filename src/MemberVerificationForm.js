@@ -47,7 +47,9 @@ function MemberVerificationForm() {
   return (
     <div>
       <h2>Member Verification Form</h2>
+
       <Link to="/admin">Go to Admin Page</Link>
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="memberId">Member ID:</label>
