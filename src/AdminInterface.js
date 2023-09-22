@@ -46,15 +46,12 @@ console.info(data);
                 const accessToken = '7905c4b1-007e-4b5a-869a-18d12932d312'; // Replace with your actual access token
                 const channelId = 'b5e569d7055b4dc8a0a40ff5e150a7b2';//19:b5e569d7055b4dc8a0a40ff5e150a7b2@thread.tacv2/Member%20Form?groupId=b0e35fe5-a737-4891-9a75-2b7e1e5ad92f&tenantId=6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4
                 // Replace with the channel's ID
-    
                 const message = {
                 body: {
                     content: 'Authorization is successful!',
                 },
                 };
-    
                 const url = `https://graph.microsoft.com/v1.0/teams/${channelId}/messages`;
-    
                 const headers = {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
@@ -68,8 +65,8 @@ console.info(data);
                     console.error('Error sending message:', error);
                 });
     
-            }
-  };
+            };
+  
  /* const approveMember = (memberId) => {
         if (window.microsoftTeams) {
         // Initialize the Microsoft Teams SDK
