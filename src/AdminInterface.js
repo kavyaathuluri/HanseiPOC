@@ -46,7 +46,7 @@ const msalConfig = {
   },
 };
 
-const msalInstance = new msal.PublicClientApplication(msalConfig);
+const msalInstance = new PublicClientApplication(msalConfig);
 
 let newAccessToken = '';
 
