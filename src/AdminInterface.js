@@ -63,7 +63,7 @@ async function refreshToken() {
     // Use the new access token for your API request
 
     newAccessToken = response.accessToken;
-
+console.log('token 1:', newAccessToken);
     // Make your API request with the new access token
     // ...
   } catch (error) {
@@ -75,7 +75,7 @@ const approveMember = async (memberId) => {
   try {
     // Call refreshToken() to obtain the access token
     await refreshToken();
-
+console.log('token 1:', newAccessToken);
     // Now, you can safely use the newAccessToken
     const accessToken = newAccessToken;
 
