@@ -85,12 +85,11 @@ async function refreshToken() {
                     content: 'Authorization is successful!',
                 },
                 };
-                const url = 'https://graph.microsoft.com/v1.0/teams/${channelId}/messages';
+                const url = `https://graph.microsoft.com/v1.0/teams/${channelId}/messages`;
                 const headers = {
-                Authorization: 'Bearer ${accessToken}',
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
                 };
-    
                 axios.post(url, message, { headers })
                 .then((response) => {
                     console.log('Message sent:', response.data);
