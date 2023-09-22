@@ -57,9 +57,9 @@ async function refreshToken() {
       scopes: ['openid', 'profile', 'User.Read', 'your-api-scope'],
       account: accounts[0], // Use the first account for simplicity; you can choose an appropriate account.
     };
-
+console.log('Before token :', silentRequest);
     const response = await msalInstance.acquireTokenSilent(silentRequest);
-
+console.log('After token :', response);
     // Use the new access token for your API request
 
     newAccessToken = response.accessToken;
@@ -75,7 +75,7 @@ const approveMember = async (memberId) => {
   try {
     // Call refreshToken() to obtain the access token
     await refreshToken();
-console.log('token 1:', newAccessToken);
+console.log('token 2:', newAccessToken);
     // Now, you can safely use the newAccessToken
     const accessToken = newAccessToken;
 
