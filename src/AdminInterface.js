@@ -40,12 +40,7 @@ console.info(data);
     fetchData();
   }, []);
 
-  // Handle approval logic here
-  const approveMember = (memberId) => {
-    // Implement logic to approve the member with memberId.
-    // You may make an API call to update the approval status.
-  };
-  const approveMember = (memberId) => {
+   const approveMember = (memberId) => {
     const axios = require('axios');
     //https://teams.microsoft.com/l/channel/19%3ab5e569d7055b4dc8a0a40ff5e150a7b2%40thread.tacv2/Member%2520Form?groupId=b0e35fe5-a737-4891-9a75-2b7e1e5ad92f&tenantId=6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4
                 const accessToken = '7905c4b1-007e-4b5a-869a-18d12932d312'; // Replace with your actual access token
