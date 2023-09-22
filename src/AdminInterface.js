@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 //import * as microsoftTeams from "@microsoft/teams-js";
+import { PublicClientApplication } from '@azure/msal-browser';
 import './AdminInterface.css'; 
-//import axios from 'axios';
+import axios from 'axios';
+
 
 
 const AdminInterface = () => {
@@ -39,12 +41,64 @@ console.info(data);
 
     fetchData();
   }, []);
+const msalConfig = {
+  auth: {
+    clientId: 'cada5da6-b77b-4b71-a944-43d72face384',
+    authority: 'https://login.microsoftonline.com/6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4',
+  },
+};
 
-  // Handle approval logic here
-  const approveMember = (memberId) => {
-    // Implement logic to approve the member with memberId.
-    // You may make an API call to update the approval status.
-  };
+const msalInstance = new msal.PublicClientApplication(msalConfig);
+let newAccessToken = '';
+async function refreshToken() {
+  try {
+    const accounts = msalInstance.getAllAccounts();
+    const silentRequest = {
+      scopes: ['openid', 'profile', 'User.Read', 'your-api-scope'],
+      account: accounts[0], // Use the first account for simplicity; you can choose an appropriate account.
+    };
+
+    const response = await msalInstance.acquireTokenSilent(silentRequest);
+
+    // Use the new access token for your API request
+    newAccessToken = response.accessToken;
+    // Make your API request with the new access token
+    // ...
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+  }
+}
+
+
+   const approveMember = (memberId) => {
+    //const axios = require('axios');
+    //https://teams.microsoft.com/l/channel/19%3ab5e569d7055b4dc8a0a40ff5e150a7b2%40thread.tacv2/Member%2520Form?groupId=b0e35fe5-a737-4891-9a75-2b7e1e5ad92f&tenantId=6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4
+     // Call refreshToken() before making the API request
+      refreshToken();  
+     const accessToken = newAccessToken;    // Replace with your actual access token
+                const channelId = 'b5e569d7055b4dc8a0a40ff5e150a7b2';//19:b5e569d7055b4dc8a0a40ff5e150a7b2@thread.tacv2/Member%20Form?groupId=b0e35fe5-a737-4891-9a75-2b7e1e5ad92f&tenantId=6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4
+                // Replace with the channel's ID
+                const message = {
+                body: {
+                    content: 'Authorization is successful!',
+                },
+                };
+                const url = 'https://graph.microsoft.com/v1.0/teams/${channelId}/messages';
+                const headers = {
+                Authorization: 'Bearer ${accessToken}',
+                'Content-Type': 'application/json',
+                };
+    
+                axios.post(url, message, { headers })
+                .then((response) => {
+                    console.log('Message sent:', response.data);
+                })
+                .catch((error) => {
+                    console.error('Error sending message:', error);
+                });
+    
+            };
+  
  /* const approveMember = (memberId) => {
         if (window.microsoftTeams) {
         // Initialize the Microsoft Teams SDK
