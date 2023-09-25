@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //import * as microsoftTeams from "@microsoft/teams-js";
-import { PublicClientApplication } from '@azure/msal-browser';
+import { PublicClientApplication } from 'msal';
 import './AdminInterface.css'; 
 import axios from 'axios';
 
@@ -48,7 +48,7 @@ const msalConfig = {
   //  scopes: ['openid', 'profile', 'email', 'ChannelMessage.Send','access_as_user']
 };
 
-const msalInstance = new ConfidentialClientApplication(msalConfig);
+const msalInstance = new PublicClientApplication(msalConfig);
 
 let newAccessToken = '';
 async function getToken() {
@@ -58,7 +58,7 @@ async function getToken() {
 
   try {
     console.log('Before token :', clientCredentialRequest);
-    const response = await msalInstance.acquireTokenByClientCredential(clientCredentialRequest);
+    const response = await msalInstance.loginPopup(clientCredentialRequest);
     console.log('After token :', response);
     const accessToken = response.accessToken;
 console.log('token :', accessToken);
