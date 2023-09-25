@@ -51,6 +51,7 @@ const tokenRequestData = {
 async function getToken() {
   axios.post(tokenEndpoint, new URLSearchParams(tokenRequestData))
   .then(response => {
+    console.log('Access Token before:', tokenRequestData);
     newAccessToken = response.data.access_token;
     console.log('Access Token:', newAccessToken);
   })
@@ -68,7 +69,7 @@ const approveMember = async (memberId) => {
   try {
     // Call refreshToken() to obtain the access token
     
-    getToken();
+    await getToken();
 console.log('token 2:', newAccessToken);
     // Now, you can safely use the newAccessToken
     const accessToken = newAccessToken;
