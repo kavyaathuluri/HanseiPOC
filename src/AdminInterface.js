@@ -39,37 +39,29 @@ console.info(data);
 
     fetchData();
   }, []);
-const msalConfig = {
-  auth: {
-    clientId: 'cada5da6-b77b-4b71-a944-43d72face384',
-    authority: 'https://login.microsoftonline.com/6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4',
-    //redirectUri: 'https://white-plant-0628baa0f.3.azurestaticapps.net/'
-  }
-  //  scopes: ['openid', 'profile', 'email', 'ChannelMessage.Send','access_as_user']
+const tokenEndpoint = 'https://login.microsoftonline.com/6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4/oauth2/token';
+const clientId = 'cada5da6-b77b-4b71-a944-43d72face384';
+const clientSecret = '7905c4b1-007e-4b5a-869a-18d12932d312';
+const scope = 'https://graph.microsoft.com/.default';
+
+const tokenRequestData = {
+  grant_type: 'client_credentials',
+  client_id: clientId,
+  client_secret: clientSecret,
+  scope: scope,
 };
-
-const msalInstance = new PublicClientApplication(msalConfig);
-
-
-let newAccessToken = '';
 async function getToken() {
-  const clientCredentialRequest = {
-    scopes: ['ChannelMessage.Send', 'access_as_user'], // Use the appropriate scope
-  };
-
-  try {
-   // initializeMSAL();
-    console.log('Before token :', clientCredentialRequest);
-    const response = await msalInstance.loginPopup();
-    //const response = await msalInstance.loginPopup(clientCredentialRequest);
-    console.log('After token :', response);
-    const accessToken = response.accessToken;
-console.log('token :', accessToken);
-    // Use the access token to send messages to the Microsoft Teams channel.
-    // Implement your logic to send messages here.
-  } catch (error) {
+  axios.post(tokenEndpoint, new URLSearchParams(tokenRequestData))
+  .then(response => {
+    const accessToken = response.data.access_token;
+    console.log('Access Token:', accessToken);
+  })
+  .catch(error => {
     console.error('Error obtaining access token:', error);
-  }
+  });
+
+ 
+  
 }
 
 
