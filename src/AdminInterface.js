@@ -43,7 +43,7 @@ const tokenEndpoint = 'https://login.microsoftonline.com/6077507f-bcd4-4ca1-bebd
 const clientId = 'cada5da6-b77b-4b71-a944-43d72face384';
 const clientSecret = '7905c4b1-007e-4b5a-869a-18d12932d312';
 const scope = 'https://graph.microsoft.com/.default';
-
+let newAccessToken='';
 const tokenRequestData = {
   grant_type: 'client_credentials',
   client_id: clientId,
@@ -53,7 +53,7 @@ const tokenRequestData = {
 async function getToken() {
   axios.post(tokenEndpoint, new URLSearchParams(tokenRequestData))
   .then(response => {
-    const accessToken = response.data.access_token;
+    newAccessToken = response.data.access_token;
     console.log('Access Token:', accessToken);
   })
   .catch(error => {
