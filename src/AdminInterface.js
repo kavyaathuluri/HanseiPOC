@@ -51,13 +51,6 @@ const msalConfig = {
 const msalInstance = new PublicClientApplication(msalConfig);
 
 
-async function initializeMSAL() {
-  try {
-    await msalInstance.handleRedirectPromise(); // Handle any redirect from the Azure AD login process
-  } catch (error) {
-    console.error('Error handling redirect:', error);
-  }
-}
 let newAccessToken = '';
 async function getToken() {
   const clientCredentialRequest = {
@@ -65,7 +58,7 @@ async function getToken() {
   };
 
   try {
-    initializeMSAL();
+   // initializeMSAL();
     console.log('Before token :', clientCredentialRequest);
     const response = await msalInstance.loginPopup();
     //const response = await msalInstance.loginPopup(clientCredentialRequest);
