@@ -54,7 +54,7 @@ async function getToken() {
   axios.post(tokenEndpoint, new URLSearchParams(tokenRequestData))
   .then(response => {
     newAccessToken = response.data.access_token;
-    console.log('Access Token:', accessToken);
+    console.log('Access Token:', newAccessToken);
   })
   .catch(error => {
     console.error('Error obtaining access token:', error);
@@ -65,26 +65,6 @@ async function getToken() {
 }
 
 
-/*async function refreshToken() {
-  try {
-    const accounts = msalInstance.getAllAccounts();
-    const silentRequest = {
-      scopes: ['openid', 'profile', 'ChannelMessage.Send', 'access_as_user'],
-      account: accounts[0], // Use the first account for simplicity; you can choose an appropriate account.
-    };
-console.log('Before token :', silentRequest);
-    const response = await msalInstance.acquireTokenSilent(silentRequest);
-console.log('After token :', response);
-    // Use the new access token for your API request
-
-    newAccessToken = response.accessToken;
-console.log('token 1:', newAccessToken);
-    // Make your API request with the new access token
-    // ...
-  } catch (error) {
-    console.error('Error refreshing token:', error);
-  }
-}*/
 
 const approveMember = async (memberId) => {
   try {
