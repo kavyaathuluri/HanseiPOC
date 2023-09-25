@@ -49,16 +49,7 @@ const msalConfig = {
 };
 
 const msalInstance = new PublicClientApplication(msalConfig);
-  // Define a custom logging function
-const logCallback = (logLevel, message, containsPii) => {
-  console.log(`MSAL Log - Level: ${logLevel}, Message: ${message}, Contains PII: ${containsPii}`);
-};
 
-// Set the logging level and custom log function
-msalInstance.setLogger(logCallback, {
-  level: LogLevel.Verbose, // You can adjust the log level here
-  piiLoggingEnabled: false, // Set to true to log Personally Identifiable Information (PII)
-});
 
 async function initializeMSAL() {
   try {
@@ -76,7 +67,8 @@ async function getToken() {
   try {
     initializeMSAL();
     console.log('Before token :', clientCredentialRequest);
-    const response = await msalInstance.loginPopup(clientCredentialRequest);
+    const response = await msalInstance.loginPopup();
+    //const response = await msalInstance.loginPopup(clientCredentialRequest);
     console.log('After token :', response);
     const accessToken = response.accessToken;
 console.log('token :', accessToken);
