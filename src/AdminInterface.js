@@ -70,7 +70,7 @@ console.log('token :', accessToken);
 }
 
 
-async function refreshToken() {
+/*async function refreshToken() {
   try {
     const accounts = msalInstance.getAllAccounts();
     const silentRequest = {
@@ -89,7 +89,7 @@ console.log('token 1:', newAccessToken);
   } catch (error) {
     console.error('Error refreshing token:', error);
   }
-}
+}*/
 
 const approveMember = async (memberId) => {
   try {
