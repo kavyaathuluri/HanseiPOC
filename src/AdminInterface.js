@@ -37,43 +37,23 @@ console.info(data);
 
     fetchData();
   }, []);
-const tokenEndpoint = 'https://login.microsoftonline.com/6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4/oauth2/token';
-const clientId = 'cada5da6-b77b-4b71-a944-43d72face384';
-const clientSecret = '7905c4b1-007e-4b5a-869a-18d12932d312';
-const scope = 'https://graph.microsoft.com/.default';
-let newAccessToken='';
-const tokenRequestData = {
-  grant_type: 'client_credentials',
-  client_id: clientId,
-  client_secret: clientSecret,
-  scope: scope,
-};
-async function getToken() {
-  axios.post(tokenEndpoint, new URLSearchParams(tokenRequestData))
-  .then(response => {
-    console.log('Access Token before:', tokenRequestData);
-    newAccessToken = response.data.access_token;
-    console.log('Access Token:', newAccessToken);
-  })
-  .catch(error => {
-    console.error('Error obtaining access token:', error);
-  });
-
- 
-  
-}
-
-
-
 const approveMember = async (memberId) => {
-  try {
-    // Call refreshToken() to obtain the access token
-    
-    await getToken();
-console.log('token 2:', newAccessToken);
+  
+   
     // Now, you can safely use the newAccessToken
-    const accessToken = newAccessToken;
+    const accessToken = async () => {
+  try {
+    const response = await axios.post('https://chatbotevafa.azurewebsites.net/api/GetToken');
+    const accessToken = response.data.accessToken;
+    
+    // Now you can use the accessToken in your app
+    console.log('Access Token:', accessToken);
+  } catch (error) {
+    console.error('Error getting access token:', error);
+  }
+};
 
+try{
     const channelId = 'b5e569d7055b4dc8a0a40ff5e150a7b2'; // Replace with your channel ID
     const message = {
       body: {
