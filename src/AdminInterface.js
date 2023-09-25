@@ -43,7 +43,9 @@ const msalConfig = {
   auth: {
     clientId: 'cada5da6-b77b-4b71-a944-43d72face384',
     authority: 'https://login.microsoftonline.com/6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4',
+    redirectUri: 'https://white-plant-0628baa0f.3.azurestaticapps.net/'
   },
+  scopes: ['openid', 'profile', 'email', 'ChannelMessage.Send','access_as_user']
 };
 
 const msalInstance = new PublicClientApplication(msalConfig);
@@ -54,7 +56,7 @@ async function refreshToken() {
   try {
     const accounts = msalInstance.getAllAccounts();
     const silentRequest = {
-      scopes: ['openid', 'profile', 'User.Read', 'your-api-scope'],
+      scopes: ['openid', 'profile', 'ChannelMessage.Send', 'access_as_user'],
       account: accounts[0], // Use the first account for simplicity; you can choose an appropriate account.
     };
 console.log('Before token :', silentRequest);
