@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //import * as microsoftTeams from "@microsoft/teams-js";
-import { PublicClientApplication } from 'msal';
+import { PublicClientApplication } from '@azure/msal-browser';
 import './AdminInterface.css'; 
 import axios from 'axios';
 
