@@ -43,14 +43,32 @@ const msalConfig = {
   auth: {
     clientId: 'cada5da6-b77b-4b71-a944-43d72face384',
     authority: 'https://login.microsoftonline.com/6077507f-bcd4-4ca1-bebd-e4ac1d05ffa4',
-    redirectUri: 'https://white-plant-0628baa0f.3.azurestaticapps.net/'
-  },
-  scopes: ['openid', 'profile', 'email', 'ChannelMessage.Send','access_as_user']
+    //redirectUri: 'https://white-plant-0628baa0f.3.azurestaticapps.net/'
+  }
+  //  scopes: ['openid', 'profile', 'email', 'ChannelMessage.Send','access_as_user']
 };
 
-const msalInstance = new PublicClientApplication(msalConfig);
+const msalInstance = new ConfidentialClientApplication(msalConfig);
 
 let newAccessToken = '';
+async function getToken() {
+  const clientCredentialRequest = {
+    scopes: ['ChannelMessage.Send', 'access_as_user'], // Use the appropriate scope
+  };
+
+  try {
+    console.log('Before token :', clientCredentialRequest);
+    const response = await msalInstance.acquireTokenByClientCredential(clientCredentialRequest);
+    console.log('After token :', response);
+    const accessToken = response.accessToken;
+console.log('token :', accessToken);
+    // Use the access token to send messages to the Microsoft Teams channel.
+    // Implement your logic to send messages here.
+  } catch (error) {
+    console.error('Error obtaining access token:', error);
+  }
+}
+
 
 async function refreshToken() {
   try {
@@ -76,7 +94,7 @@ console.log('token 1:', newAccessToken);
 const approveMember = async (memberId) => {
   try {
     // Call refreshToken() to obtain the access token
-    await refreshToken();
+    await getToken();
 console.log('token 2:', newAccessToken);
     // Now, you can safely use the newAccessToken
     const accessToken = newAccessToken;
