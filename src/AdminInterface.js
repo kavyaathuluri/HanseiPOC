@@ -49,7 +49,13 @@ const msalConfig = {
 };
 
 const msalInstance = new PublicClientApplication(msalConfig);
-
+async function initializeMSAL() {
+  try {
+    await msalInstance.handleRedirectPromise(); // Handle any redirect from the Azure AD login process
+  } catch (error) {
+    console.error('Error handling redirect:', error);
+  }
+}
 let newAccessToken = '';
 async function getToken() {
   const clientCredentialRequest = {
@@ -94,7 +100,8 @@ console.log('token 1:', newAccessToken);
 const approveMember = async (memberId) => {
   try {
     // Call refreshToken() to obtain the access token
-    await getToken();
+    initializeMSAL();
+    getToken();
 console.log('token 2:', newAccessToken);
     // Now, you can safely use the newAccessToken
     const accessToken = newAccessToken;
