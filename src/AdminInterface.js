@@ -43,15 +43,29 @@ const approveMember = async (memberId) => {
     // Now, you can safely use the newAccessToken
     const accessToken = async () => {
   try {
-    const response = await axios.post('https://chatbotevafa.azurewebsites.net/api/GetToken');
-    const accessToken = response.data.accessToken;
-    
+    const response = await fetch('https://chatbotevafa.azurewebsites.net/api/GetToken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Set the content type if needed
+      },
+      // You can include a request body if required
+      // body: JSON.stringify({ key: 'value' }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch access token');
+    }
+console.log('response:', response);
+    const data = await response.json();
+    const accessToken = data.accessToken;
+
     // Now you can use the accessToken in your app
     console.log('Access Token:', accessToken);
   } catch (error) {
     console.error('Error getting access token:', error);
   }
 };
+
 
 try{
     const channelId = 'b5e569d7055b4dc8a0a40ff5e150a7b2'; // Replace with your channel ID
