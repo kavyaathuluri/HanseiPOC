@@ -67,25 +67,35 @@ console.log('response:', response);
 };
 
 
-try{
-    const channelId = 'b5e569d7055b4dc8a0a40ff5e150a7b2'; // Replace with your channel ID
-    const message = {
-      body: {
-        content: 'Authorization is successful!',
-      },
-    };
-    const url = `https://graph.microsoft.com/v1.0/teams/${channelId}/messages`;
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    };
+try {
+  const channelId = 'b5e569d7055b4dc8a0a40ff5e150a7b2'; // Replace with your channel ID
+  const message = {
+    body: {
+      content: 'Authorization is successful!',
+    },
+  };
+  const url = `https://graph.microsoft.com/v1.0/teams/${channelId}/messages`;
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'application/json',
+  };
 
-    const response = await axios.post(url, message, { headers });
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(message),
+  });
 
-    console.log('Message sent:', response.data);
-  } catch (error) {
-    console.error('Error sending message:', error);
+  if (!response.ok) {
+    throw new Error('Failed to send message');
   }
+
+  const responseData = await response.json();
+  console.log('Message sent:', responseData);
+} catch (error) {
+  console.error('Error sending message:', error);
+}
+
 };
 
  
